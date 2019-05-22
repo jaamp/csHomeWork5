@@ -23,6 +23,7 @@ namespace csHomeWork5
         bool player = true;
         bool winner = false;
         bool newGame = false;
+        bool notFair = true;
         int numClicks = 0;
 
         public MainWindow()
@@ -38,6 +39,7 @@ namespace csHomeWork5
             for (var i = 0; i < 9; i++)
             {
                 buttons[i].Content = "";
+                buttons[i].IsEnabled = true;
             }
             MessageBox.Show("Begin new game");
             player = true;
@@ -61,16 +63,19 @@ namespace csHomeWork5
             }
             else
             {
+                {
+                    if (player)
+                    {
+                        (sender as Button).Content = "X";
+                    }
+                    else
+                    {
+                        (sender as Button).Content = "O";
+                    }
+                    (sender as Button).IsEnabled = false;
+                }
+ 
                 numClicks = numClicks + 1;
-                if (player)
-                {
-                    (sender as Button).Content = "X";
-                }
-                else
-                {
-                    (sender as Button).Content = "O";
-                }
-
                 checkForWin();
 
                 if (!winner)
@@ -78,7 +83,6 @@ namespace csHomeWork5
                     changePlayer();
                 }
             }
-
         }
 
         private bool changePlayer()
@@ -103,19 +107,20 @@ namespace csHomeWork5
             List<FrameworkElement> gridKids = gridKid.Cast<FrameworkElement>().ToList();
             List<Button> buttons = gridKids.OfType<Button>().ToList();
             string[] winCheck = new string[9];
-            for (var i=0; i < 9; i++)
+            for (var i = 0; i < 9; i++)
             {
                 var winCK = buttons[i].Content;
                 winCheck[i] = winCK.ToString();
             }
-            if ((winCheck[0] == "O" && winCheck[1] == "O" && winCheck[2] == "O") || 
+            if ((winCheck[0] == "O" && winCheck[1] == "O" && winCheck[2] == "O") ||
                     (winCheck[3] == "O" && winCheck[4] == "O" && winCheck[5] == "O") ||
                     (winCheck[6] == "O" && winCheck[7] == "O" && winCheck[8] == "O") ||
                     (winCheck[0] == "O" && winCheck[3] == "O" && winCheck[6] == "O") ||
                     (winCheck[1] == "O" && winCheck[4] == "O" && winCheck[7] == "O") ||
                     (winCheck[2] == "O" && winCheck[5] == "O" && winCheck[8] == "O") ||
                     (winCheck[0] == "O" && winCheck[4] == "O" && winCheck[8] == "O") ||
-                    (winCheck[2] == "O" && winCheck[4] == "O" && winCheck[6] == "O")) {
+                    (winCheck[2] == "O" && winCheck[4] == "O" && winCheck[6] == "O"))
+            {
                 MessageBox.Show(" 'O' Wins");
                 winner = true;
                 newGame = false;
@@ -127,12 +132,14 @@ namespace csHomeWork5
                         (winCheck[1] == "X" && winCheck[4] == "X" && winCheck[7] == "X") ||
                         (winCheck[2] == "X" && winCheck[5] == "X" && winCheck[8] == "X") ||
                         (winCheck[0] == "X" && winCheck[4] == "X" && winCheck[8] == "X") ||
-                        (winCheck[2] == "X" && winCheck[4] == "X" && winCheck[6] == "X")){
+                        (winCheck[2] == "X" && winCheck[4] == "X" && winCheck[6] == "X"))
+            {
                 MessageBox.Show(" 'X' Wins");
                 winner = true;
                 newGame = false;
             }
-            else if (numClicks == 9) {
+            else if (numClicks == 9)
+            {
                 MessageBox.Show("Tie Game No Winner");
                 winner = true;
                 newGame = false;
@@ -141,4 +148,3 @@ namespace csHomeWork5
         }
     }
 }
- 
